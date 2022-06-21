@@ -1,8 +1,6 @@
-import vpython as vpy
-from time import *
+import vpython
 from random import randrange
 
-# Funzione che crea palline in posizioni e di colori casuali
 def createBall(roomWidth, roomDepth, roomHeight):
     radius=randrange(1,50,1)/10
     xInBox=int(roomWidth/2-radius)
@@ -11,11 +9,15 @@ def createBall(roomWidth, roomDepth, roomHeight):
     xPos=randrange(-xInBox,xInBox)
     yPos=randrange(-yInBox,yInBox)
     zPos=randrange(-zInBox,zInBox)
+
+    return vpython.sphere(pos=vpython.vector(xPos,yPos,zPos),color=randomColor(),radius=radius)
+
+def randomColor():
     redColor=randrange(0,100,1)/100
     greenColor=randrange(0,100,1)/100
     blueColor=randrange(0,100,1)/100
-
-    return vpy.sphere(pos=vpy.vector(xPos,yPos,zPos),color=vpy.vector(redColor,greenColor,blueColor),radius=radius)
+    
+    return vpython.vector(redColor, greenColor, blueColor)
 
 def randomDelta():
     deltaX=randrange(0,10,1)/10
@@ -25,7 +27,7 @@ def randomDelta():
 
     return seq
 
-def create_box():
+def create_box(wallThickness, roomWidth, roomDepth, roomHeight):
     yCeiling=(roomHeight/2+wallThickness/2)
     yFloor=-(roomHeight/2+wallThickness/2)
     xSizeCeiling=roomWidth+2*wallThickness
@@ -38,9 +40,9 @@ def create_box():
     ySizeWall=roomHeight+wallThickness*2
     zSizeWall=roomDepth+wallThickness
 
-    floor=vpy.box(pos=vpy.vector(0,yFloor,0),color=color.white,size=vpy.vector(xSizeFloor,wallThickness,zSizeFloor),opacity=0.2)
-    ceiling=vpy.box(pos=vpy.vector(0,yCeiling,0),color=color.white,size=vpy.vector(xSizeCeiling,wallThickness,zSizeCeiling),opacity=0.2)
-    rightWall=vpy.box(pos=vpy.vector(xWall,0,0),color=color.white,size=vpy.vector(wallThickness,ySizeWall,zSizeWall),opacity=0.2)
-    leftWall=vpy.box(pos=vpy.vector(-xWall,0,0),color=color.white,size=vpy.vector(wallThickness,ySizeWall,zSizeWall),opacity=0.2)
-    backWall=vpy.box(pos=vpy.vector(0,0,zWall),color=color.white,size=vpy.vector(xSizeWall,ySizeWall,wallThickness),opacity=0.2)
-    frontWall=vpy.box(pos=vpy.vector(0,0,-zWall),color=color.white,size=vpy.vector(xSizeWall,ySizeWall,wallThickness),opacity=0.2)
+    vpython.box(pos=vpython.vector(0,yFloor,0),color=vpython.color.white,size=vpython.vector(xSizeFloor,wallThickness,zSizeFloor),opacity=0.2)
+    vpython.box(pos=vpython.vector(0,yCeiling,0),color=vpython.color.white,size=vpython.vector(xSizeCeiling,wallThickness,zSizeCeiling),opacity=0.2)
+    vpython.box(pos=vpython.vector(xWall,0,0),color=vpython.color.white,size=vpython.vector(wallThickness,ySizeWall,zSizeWall),opacity=0.2)
+    vpython.box(pos=vpython.vector(-xWall,0,0),color=vpython.color.white,size=vpython.vector(wallThickness,ySizeWall,zSizeWall),opacity=0.2)
+    vpython.box(pos=vpython.vector(0,0,zWall),color=vpython.color.white,size=vpython.vector(xSizeWall,ySizeWall,wallThickness),opacity=0.2)
+    vpython.box(pos=vpython.vector(0,0,-zWall),color=vpython.color.white,size=vpython.vector(xSizeWall,ySizeWall,wallThickness),opacity=0.2)
